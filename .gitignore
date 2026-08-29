@@ -7,3 +7,6 @@ dist/
 *.iml
 .env
 .DS_Store
+
+# SPA build output (Docker rebuilds it fresh)
+src/main/resources/static/
