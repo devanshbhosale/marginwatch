@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    # Neon PostgreSQL in prod via SPRING_DATASOURCE_URL (append ?sslmode=require);
+    # local dev / tests fall back to in-memory H2 in PostgreSQL compatibility mode.
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:marginwatch;MODE=PostgreSQL;DB_CLOSE_DELAY=-1}
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    open-in-view: false
+  jackson:
+    time-zone: Asia/Kolkata
+    default-property-inclusion: non_null
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:local-dev-only-secret-0123456789abcdef0123456789abcdef}
+    expiry-hours: 24
+  seed:
+    admin-password: ${ADMIN_PASSWORD:Admin@Local2026}
+  files:
+    # Parse uploads on a background thread in prod; tests set this false so the
+    # parse finishes inside the upload request and assertions can run right after.
+    async: ${ASYNC_PROCESSING:true}
+    max-rows: 5000
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+server:
+  # Render Docker injects PORT; bind to it. 8080 stays the local default.
+  port: ${PORT:8080}

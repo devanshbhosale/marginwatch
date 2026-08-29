@@ -1,0 +1,26 @@
+# Render Blueprint — free-tier deployment.
+# Single Docker web service; database is Neon free PostgreSQL (permanent, not
+# Render's 30-day-expiring free DB). Keep-alive is handled outside Render by a
+# cron-job.org job pinging /actuator/health every 10 min, 09:00-18:00 IST
+# (pooled with ChannelHub's window: both fit inside the 750 pooled free hours).
+services:
+  - type: web
+    name: marginwatch
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      # From Neon dashboard → connection string, scheme swapped to jdbc:postgresql://
+      # e.g. jdbc:postgresql://ep-xxx.aws.neon.tech/neondb?sslmode=require
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        sync: false # prompted once at deploy time; strong value, never in git

@@ -1,0 +1,39 @@
+# Test config: standalone copy of the main config (test classpath shadows the
+# main application.yml) with parsing forced inline so tests can assert on the
+# finished file straight after the upload call.
+spring:
+  datasource:
+    url: jdbc:h2:mem:marginwatch-test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+  jackson:
+    time-zone: Asia/Kolkata
+    default-property-inclusion: non_null
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+
+app:
+  jwt:
+    secret: test-only-secret-0123456789abcdef0123456789abcdef
+    expiry-hours: 24
+  seed:
+    admin-password: Admin@Local2026
+  files:
+    async: false
+    max-rows: 5000
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
