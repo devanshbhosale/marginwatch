@@ -21,6 +21,10 @@ export function AuthProvider({ children }) {
         const r = await api.post('/auth/login', { email, password });
         localStorage.setItem('mw_token', r.data.token);
         localStorage.setItem('mw_user', JSON.stringify(r.data.user));
+        // Demo sessions pitch the app to strangers — start them with the
+        // sidebar closed so the content is the first thing they see.
+        // Everyone else starts open.
+        localStorage.setItem('mw-sidebar-closed', r.data.user.isDemo ? '1' : '0');
         setUser(r.data.user);
         return r.data.user;
       },

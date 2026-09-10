@@ -151,7 +151,43 @@ a { color: var(--accent); }
 }
 .side-logout:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
 
-.main { margin-left: 220px; min-height: 100vh; display: flex; flex-direction: column; }
+/* Sidebar open/close — .side-closed rides on .app; visibility is delayed so
+   the slide-out finishes before links become unfocusable. */
+
+.topbar-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+
+.side-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.side-toggle:hover { color: var(--accent); border-color: var(--accent-line); background: var(--accent-soft); }
+
+.sidebar { transition: transform 0.18s ease, visibility 0s; }
+
+.app.side-closed .sidebar {
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform 0.18s ease, visibility 0s 0.18s;
+}
+.app.side-closed .main { margin-left: 0; }
+
+.main {
+  margin-left: 220px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.18s ease;
+}
 
 .topbar {
   height: 52px;
