@@ -6,7 +6,12 @@ margin-breaking change before it's applied, and audits who changed what.
 
 Built as a portfolio piece for IT-distribution operations (Java full-stack).
 
-## Live demo
+![MarginWatch dashboard — applied changes, margin by category, breach heatmap](docs/marginwatch-dashboard.png)
+
+## Demo accounts
+
+These logins work against the seeded workspace: run locally with the command in
+"Run locally", or deploy with the steps below and use them online.
 
 | Role | Email | Password | Can do |
 |---|---|---|---|
